@@ -12,6 +12,10 @@ function custom_hello_world_shortcode($atts)
 		return '<p>Please Select A Parent Category of Whom Child Category You want to Show</p>';
 	}
 	$parent_category_slug = $atts['parent-category'];
+	$number_of_columns = 3;
+	if (isset($atts['columns'])) {
+		$number_of_columns = $atts['columns'];
+	} 
 	$parent_category = get_term_by('slug', $parent_category_slug, 'product_cat');
 
 	if ($parent_category && !is_wp_error($parent_category)) {
@@ -29,20 +33,20 @@ function custom_hello_world_shortcode($atts)
 
 
 
-	$output = '<div style="display: grid; grid-template-columns: repeat(3,1fr); grid-gap: 10px;">';
+	$output = '<div style="display: grid; grid-template-columns: repeat('.  $number_of_columns .  ',1fr); grid-gap: 10px;">';
 	if (!empty($child_categories)) {
 		foreach ($child_categories as $category) {
 			$link = '';
 			$link .= '/shop/?product_cat=';
 			$link .= $parent_category_slug . '+' . $category->slug;
-		
+
 			$category_id = $category->term_id;
 			$category_name = $category->name;
 			$thumbnail_id = get_term_meta($category_id, 'thumbnail_id', true);
 
 			$image = wp_get_attachment_url($thumbnail_id);
 			$output .= '<div style="min-height: 350px;"><a href="' . $link . '">';
-		
+
 
 
 			if ($image) {
