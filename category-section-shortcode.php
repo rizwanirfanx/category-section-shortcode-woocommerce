@@ -20,7 +20,7 @@ function custom_hello_world_shortcode($atts)
 		$number_of_columns = $atts['columns'];
 	}
 
-	if (isset($img_height)) {
+	if (isset($atts['img-height'])) {
 		$img_height = $img_height;
 	}
 	$parent_category = get_term_by('slug', $parent_category_slug, 'product_cat');
