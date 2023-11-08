@@ -13,9 +13,16 @@ function custom_hello_world_shortcode($atts)
 	}
 	$parent_category_slug = $atts['parent-category'];
 	$number_of_columns = 3;
+	$img_height = '300px';
+	
+
 	if (isset($atts['columns'])) {
 		$number_of_columns = $atts['columns'];
-	} 
+	}
+
+	if (isset($img_height)) {
+		$img_height = $img_height;
+	}
 	$parent_category = get_term_by('slug', $parent_category_slug, 'product_cat');
 
 	if ($parent_category && !is_wp_error($parent_category)) {
@@ -33,7 +40,7 @@ function custom_hello_world_shortcode($atts)
 
 
 
-	$output = '<div style="display: grid; grid-template-columns: repeat('.  $number_of_columns .  ',1fr); grid-gap: 10px;">';
+	$output = '<div style="display: grid; grid-template-columns: repeat(' .  $number_of_columns .  ',1fr); grid-gap: 10px;">';
 	if (!empty($child_categories)) {
 		foreach ($child_categories as $category) {
 			$link = '';
@@ -50,9 +57,9 @@ function custom_hello_world_shortcode($atts)
 
 
 			if ($image) {
-				$output .= '<img loading="lazy" style="height: 300px; width:100%; object-fit: cover;" src="' . esc_url($image) . '" alt="' . $category_name . ' Image">';
+				$output .= '<img loading="lazy" style="height:' . $img_height . ' ; width:100%; object-fit: cover;" src="' . esc_url($image) . '" alt="' . $category_name . ' Image">';
 			} else {
-				$output .= '<img loading="lazy" style="height: 300px;" src="https://i0.wp.com/thinkfirstcommunication.com/wp-content/uploads/2022/05/placeholder-1-1.png?fit=1200%2C800&ssl=1"/>';
+				$output .= '<img loading="lazy" style="height:' . $img_height .  ' ;" src="https://i0.wp.com/thinkfirstcommunication.com/wp-content/uploads/2022/05/placeholder-1-1.png?fit=1200%2C800&ssl=1"/>';
 			}
 			$output .=  '<p style="text-align:center;margin-top :20px">'  . $category_name . ' (' . $category->count . ') ' .  '</p>';
 			$output .= '</div>';
